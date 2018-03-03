@@ -40,9 +40,9 @@
     <path id="test.classpath">
         <pathelement location="${build.home}/classes"/>
         <pathelement location="${build.home}/tests"/>
-        <pathelement location="${junit.jar}"/>
-        <pathelement location="${hamcrest.jar}"/>        
-        <pathelement location="${easymock.jar}"/>
+        <pathelement location="lib/junit-4.9.jar"/>
+        <pathelement location="lib/hamcrest.jar"/>        
+        <pathelement location="lib/easymock-3.5.1.jar"/>
     </path>
 
     <!-- ========== Executable Targets ======================================== -->
@@ -231,7 +231,6 @@
         </zip>
         <tar destfile="${build.home}/${final.name}.tar.gz" compression="gzip">
             <zipfileset src="${build.home}/${final.name}.zip"/>
-
         </tar>
 
         <!-- source distro -->
@@ -255,25 +254,28 @@
         </tar>
 
     </target>
-    
-    <!-- ========== PITest ========================================= -->
-    <taskdef name="pitest" classname="org.pitest.ant.PitestTask" classpathref="pit.path" />
-    
-            <!-- classpath for pitest and any plugins -->
+	
+    <!-- classpath for pitest and any plugins -->
 	<path id="pitest.path">
-                <!-- must currently include the test library on the tool classpath. this will be fixed in a future version-->
-   		<pathelement location="lib/junit-4.9.jar" />
+	    <!-- must currently include the test library on the tool classpath. this will be fixed in a future version-->
+		<pathelement location="lib/junit-4.9.jar" />
 		<pathelement location="lib/pitest-1.1.4.jar" />
 		<pathelement location="lib/pitest-ant-1.1.4.jar" />
 	</path>
 	
-	<target name="mutationCoverage">
-    <pitest
-        pitClasspath="pit.path"
-        classPath="mutation.path"
-        targetClasses="org.apache.commons.collections4.*"
-        targetTests="org.apache.commons.collections4.*"
-        reportDir="${basedir}/pitReports"
-        sourceDir="${basedir}/src"/>
-</target>
+	<taskdef name="pitest" classname="org.pitest.ant.PitestTask" classpathref="pitest.path" />
+	
+    <!-- run pitest. note that the filters for tests and classes refer to package/class names, not source file named -->
+	<target name="pit" depends="test">
+		<path id="mutation.path">
+			<path refid="pitest.path"/>
+			<path refid="test.classpath"/>
+		</path>
+		<pitest pitClasspath="pitest.path" 
+			threads="2" classPath="mutation.path" 
+			targetTests="org.apache.commons.collections4.*" 
+			targetClasses="org.apache.commons.collections4.*" 
+			reportDir="pitReports" 
+			sourceDir="src" />
+	</target>
 </project>

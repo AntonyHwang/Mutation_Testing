@@ -1,0 +1,16 @@
+Testsuite: org.apache.commons.collections4.functors.AllPredicateTest
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.077 sec
+
+Testcase: allTrue took 0.036 sec
+Testcase: oneTruePredicate took 0 sec
+Testcase: oneFalsePredicate took 0 sec
+Testcase: trueAndFalseCombined took 0.003 sec
+Testcase: emptyArrayToGetInstance took 0 sec
+Testcase: emptyCollectionToGetInstance took 0 sec
+Testcase: singleElementArrayToGetInstance took 0 sec
+Testcase: singletonCollectionToGetInstance took 0 sec
+Testcase: nullArrayToGetInstance took 0 sec
+Testcase: nullElementInArrayToGetInstance took 0 sec
+Testcase: nullElementsInArrayToGetInstance took 0.001 sec
+Testcase: nullCollectionToGetInstance took 0 sec
+Testcase: nullElementsInCollectionToGetInstance took 0 sec

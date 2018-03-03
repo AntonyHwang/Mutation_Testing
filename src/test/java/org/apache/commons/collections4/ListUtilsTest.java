@@ -52,7 +52,7 @@ public class ListUtilsTest {
         fullArray = new String[]{a, b, c, d, e};
         fullList = new ArrayList<String>(Arrays.asList(fullArray));
     }
-
+    
     /**
      * Tests intersecting a non-empty list with an empty list.
      */
@@ -161,6 +161,38 @@ public class ListUtilsTest {
 
         assertNotNull(list.get(5));
         assertEquals(6, list.size());
+
+    }
+    
+    @Test
+    public void testLazyListGet() {
+        final List<Integer> list = ListUtils.lazyList(new ArrayList<Integer>(), new Factory<Integer>() {
+            
+            private int index;
+            
+            public Integer create() {
+                index = 1;
+                return 1;
+            }
+        });
+        Integer result = list.get(0);
+        assertSame(1, result);
+    }
+    
+    @Test
+    public void testLazyListGetNull() {
+        final List<Integer> list = ListUtils.lazyList(new ArrayList<Integer>(), new Factory<Integer>() {
+            
+            private int index;
+            
+            public Integer create() {
+                index = 1;
+                return 1;
+            }
+        });
+        list.add(null);
+        Integer result = list.get(0);
+        assertSame(1, result);
     }
 
     @Test
